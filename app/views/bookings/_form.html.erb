@@ -1,0 +1,36 @@
+<%= form_for(@booking) do |f| %>
+  <% if @booking.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+      <ul>
+      <% @booking.errors.full_messages.each do |message| %>
+        <li><%= message %></li>
+      <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="field">
+    <%= f.label :"Room No" %>
+    <%= f.number_field :roomno, :value=>@booking.roomno %>
+  </div>
+<% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
+  <div class="field">
+    <%= f.label :booked_user %>
+    <%= f.text_field :booked_user %>
+  </div>
+    <% else %>
+    <%= f.hidden_field :booked_user, :value => current_user.email %>
+    <% end %>
+  <div class="field">
+    <%= f.label :starttime %>
+    <%= f.datetime_select :starttime %>
+  </div>
+
+    <%= f.hidden_field :endtime, :value => ((f.datetime_select :starttime).to_time + 2.hours).to_datetime  %>
+
+  <div class="actions">
+    <%= f.submit %>
+  </div>
+<% end %>

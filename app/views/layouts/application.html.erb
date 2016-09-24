@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <style>
+      ul {
+        list-style-type: none;
+        margin: 0;
+        padding: 0;
+        max-height: 30px;
+        min-height: 20px;
+        height: 50%;
+        overflow: hidden;
+        background-color: #f96e5b;
+      }
+      ul:after {
+        content: " ";
+        display: block;
+        font-size: 0;
+        height: 0;
+        clear: both;
+        visibility: hidden;
+      }
+      li {
+        float: left;
+      }
+      ul li a {
+        color: #ffffff;
+        text-decoration: none;
+        display: block;
+        padding: 5px 25px;
+        font-family: 'Open Sans', sans-serif;
+        font-weight: 700;
+        font-size: 14px;
+        position: relative;
+        -webkit-transition: color .25s;
+        -moz-transition: color .25s;
+        -ms-transition: color .25s;
+        -o-transition: color .25s;
+        transition: color .25s;
+      }
+      li a:hover {
+        background-color: #333333;
+      }
+    </style>
+    <style>
+      body{
+        background-color: #C0C0C0;
+      }
+    </style>
+    <title>Untitled3</title>
+    <%= csrf_meta_tags %>
+
+    <%= stylesheet_link_tag    'default', media: 'all', 'data-turbolinks-track': 'reload' %>
+    <%= javascript_include_tag 'default', 'data-turbolinks-track': 'reload' %>
+  </head>
+
+  <body>
+  <% if current_user %>
+      <% if current_user.usertype == 'Member' %>
+          <h3>Welcome <%= current_user.name %> | <%= link_to "Logout", '/users/logout'%></h3>
+          <p id="notice"><%= notice %></p>
+          <ul >
+            <li >  <%= link_to "Edit Profile", edit_user_path(current_user) %> </li>
+            <li >  <%= link_to "Search Rooms", rooms_path %> </li>
+          </ul>
+      <% elsif current_user.usertype == 'Admin' or  current_user.usertype == 'Super Admin' %>
+          <h3>Welcome <%= current_user.name %> | <%= link_to "Logout", '/users/logout'%></h3>
+          <p id="notice"><%= notice %></p>
+          <ul >
+            <li> <%= link_to "Edit Profile", edit_user_path(current_user) %> </li>
+            <li><%= link_to "Manage Users", users_path %></li>
+            <li><%= link_to "Manage Rooms", rooms_path %></li>
+            <li><%= link_to "Add Admin", new_user_users_path %></li>
+            <li><%= link_to "Search Users", users_path %></li>
+            <li><%= link_to "Add Room", new_room_path %></li>
+            <li><%= link_to "view Bookings", bookings_path %></li>
+          </ul>
+     <% end %>
+  <% else %>
+      <% unless action_name == 'create' %>
+          <h1> Welcome to NCSU Library Room Booking </h1>
+          <%= form_for :user, url: login_users_path do |f| %>
+              <%= flash[:notice] %>
+              <div class="field">
+                <%= f.label :email %><br>
+                <%= f.text_field :email %>
+              </div>
+              <div class="field">
+                <%= f.label :password %><br>
+                <%= f.password_field :password %>
+              </div>
+              <%= f.submit :Login %>
+          <% end %>
+          <p> <strong> New User? </strong> <%= link_to "Register Here", new_user_path %></p>
+      <% end %>
+  <% end %>
+  <%= yield %>
+
+  </body>
+</html>

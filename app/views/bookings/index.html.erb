@@ -1,0 +1,87 @@
+<html>
+<head>
+  <title> List of Rooms </title>
+  <style>
+    body{
+      background-color: #C0C0C0;
+    }
+  </style>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>jQuery UI Datepicker - Default functionality</title>
+  <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  <link rel="stylesheet" href="/resources/demos/style.css">
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+  <script>
+    $( function() {
+      $( "#datepicker" ).datepicker();
+    } );
+  </script>
+</head>
+<body>
+
+<h3> Search By </h3>
+
+<%= form_for :room, url: search_bookings_path, method: :get do |f| %>
+    <div class="field">
+      <%= f.label :"Room No" %><br>
+      <%= f.text_field :roomno %>
+    </div>
+    <div class="field">
+      <%= f.label :"Building" %><br>
+      <%= f.select :building, ['','D.H.Hill', 'James.B.Hunt'] %>
+    </div>
+    <div class="field">
+      <%= f.label :"Size" %><br>
+      <%= f.select :size, ['' ,4,6,12] %>
+    </div>
+
+    <%= f.submit :Search %>
+<% end %>
+<h3> List of Reservations</h3>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Room No</th>
+    <th>Building</th>
+    <th>Size</th>
+    <th>start Time</th>
+    <th>End Time</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% if @bookings.nil? %>
+      <% @rooms.each do |room| %>
+          <tr>
+            <td><%= room.roomno %></td>
+            <td><%= room.building %></td>
+            <td><%= room.size %></td>
+            <td> No reservations </td>
+            <td> No reservations </td>
+            <td> <%= link_to 'Create Reservation', new_booking_path(room) %></td>
+      <% end %>
+      </tr>
+  <% else %>
+      <% @bookings.each do |booking| %>
+          <tr>
+            <td><%= booking.roomno %></td>
+            <% @rooms.each do |room| %>
+                <% if room.roomno==booking.roomno %>
+                    <td><%= room.building %></td>
+                    <td><%= room.size %></td>
+                <% end %>
+            <% end %>
+            <td><%= booking.starttime %></td>
+            <td><%= booking.endtime %></td>
+            <td> <%= link_to 'Create Reservation', new_booking_path(booking) %></td>
+      <% end %>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+
+
+</body>

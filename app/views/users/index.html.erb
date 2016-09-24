@@ -1,0 +1,49 @@
+<ul>
+  <li><%= link_to "Add Admin", new_user_users_path %></li>
+</ul>
+
+<%= form_for :user, url: search_users_path, method: :get do |f| %>
+    <div class="field">
+      <%= f.label :"Name" %><br>
+      <%= f.text_field :name %>
+    </div>
+    <div class="field">
+      <%= f.label :"Email" %><br>
+      <%= f.text_field :email %>
+    </div>
+    <div class="field">
+      <%= f.label :"User Type" %><br>
+      <%= f.text_field :usertype %>
+    </div>
+    <%= f.submit :Search %>
+<% end %>
+<h3> List of Users </h3>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Name</th>
+    <th>Email</th>
+    <th>User Type</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @users.each do |user| %>
+      <tr>
+        <td><%= user.name %></td>
+        <td><%= user.email %></td>
+        <td><%= user.usertype %></td>
+        <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin'  %>
+      <td><%= link_to 'Show', user %></td>
+            <td><%= link_to 'View Booking History', view_reservation_users_path(user)  %></td>
+        <% end %>
+            <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin' and current_user.email!=user.email and user.usertype!='Super Admin' %>
+      <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
+        <% end %>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+
+</body>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<style>
+  body{
+    background-color: #C0C0C0;
+  }
+</style>
+<p>
+  <strong>Email:</strong>
+  <%= @user.email %>
+</p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @user.name %>
+</p>
+
+
+
+<p>
+  <strong>Type:</strong>
+  <%= @user.usertype %>
+</p>
+
+<%= link_to 'Edit', edit_user_path(@user) %> |
+<%= link_to 'Back', users_path %>

@@ -1,0 +1,25 @@
+<p id="notice"><%= notice %></p>
+<style>
+  body{
+    background-color: #C0C0C0;
+  }
+</style>
+<% @bookings.each do |booking| %>
+<p>
+  <strong>Roomno:</strong>
+  <%= booking.roomno %>
+</p>
+
+<p>
+  <strong>start time:</strong>
+  <%= booking.starttime %>
+</p>
+    <p>
+      <strong>End time:</strong>
+      <%= booking.endtime %>
+    </p>
+
+<% end %>
+
+
+<%= link_to 'Back', users_path %>
