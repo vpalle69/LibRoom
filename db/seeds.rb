@@ -3,5 +3,7 @@
 #
 # Examples:
 #
+User.create([{email: 'vamshi@ncsu.edu'}, {name: 'Vamshi'}, {password: 'vamshi'}, {usertype: 'Super Admin'}])
+
 #   movies = Movie.create([{ name: 'Star Wars' }, { name: 'Lord of the Rings' }])
 #   Character.create(name: 'Luke', movie: movies.first)
