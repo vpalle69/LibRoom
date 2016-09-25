@@ -35,10 +35,11 @@
         <td><%= user.email %></td>
         <td><%= user.usertype %></td>
         <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin'  %>
-            <td><%= link_to 'Show', room %></td>
+            <td><%= link_to 'Show', user %></td>
+            <td><%= link_to 'View Booking History', {:controller => "users", :action => "view_reservation", :email => user.email}  %></td>
         <% end %>
-        <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin' and current_user.email!=user.email and current_user.usertype!='Super Admin'  %>
-            <td><%= link_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
+        <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin' and current_user.email!=user.email and user.usertype!='Super Admin' %>
+            <td><%= button_to 'Delete', user, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
         <% end %>
   <% end %>
   </tr>

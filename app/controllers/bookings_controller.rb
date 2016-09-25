@@ -36,6 +36,8 @@ class BookingsController < ApplicationController
   # GET /bookings/new
   def new
     @booking = Booking.new
+    @room = Room.find_by(roomno: params[:roomno])
+    return @booking,@room
   end
 
   # GET /bookings/1/edit
@@ -45,8 +47,39 @@ class BookingsController < ApplicationController
   # POST /bookings
   # POST /bookings.json
   def create
-    render plain: booking_params
+
     @booking = Booking.new(booking_params)
+    @room = Room.where("roomno = ?", @booking.roomno)
+    if @room.nil?
+      flash[:notice] = "Room not found !"
+      render 'bookings/new' and return
+    end
+    if current_user.usertype != "Admin" or current_user.usertype != 'Super Admin'
+      @user = User.where("email LIKE ?", current_user.usertype)
+    else
+      @user = User.where("email LIKE ?", params[:booked_user])
+      if @user.nil? or @user.empty?
+        flash[:notice] = "User not found !"
+        render 'bookings/new' and return
+      end
+    end
+    @current_bookings = Booking.where("roomno = ? and ? <= endtime and starttime <= ? ", @booking.roomno,
+                                              @booking.starttime, @booking.endtime)
+    if not @current_bookings.nil? and not @current_bookings.empty?
+      puts @current_bookings.first.starttime
+      puts @current_bookings.first.roomno
+      flash[:notice] = "This room is not available at this time. Conflicts with other reservation which starts at #{@current_bookings.first.starttime} "
+      render 'bookings/new' and return
+    end
+    if @booking.starttime > @booking.endtime
+      flash[:notice] = "ERROR: Booking start  time can't be greater than end time"
+      render 'bookings/new' and return
+    end
+
+    if @booking.starttime + 2.hours < @booking.endtime
+      flash[:notice] = "ERROR : Booking can be made only for 2 hours at a time"
+      render 'bookings/new' and return
+    end
     respond_to do |format|
 
       if @booking.save
@@ -83,6 +116,7 @@ class BookingsController < ApplicationController
       format.json { head :no_content }
     end
   end
+
 
   private
     # Use callbacks to share common setup or constraints between actions.

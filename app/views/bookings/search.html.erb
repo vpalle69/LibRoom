@@ -75,7 +75,10 @@
             <% end %>
         <% end %>
         <td><%= booking.starttime %></td>
-        <td><%= booking.endtime %></td>
+        <td><%= booking.starttime+2.hours %></td>
+        <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' or current_user.email==booking.booked_user %>
+        <td> <%= button_to 'Release Room', booking,method: :delete,  confirm: 'Are you sure you want to delete it?'  %></td>
+        <% end %>
         <td> <%= link_to 'Create Reservation', new_booking_path(booking) %></td>
   <% end %>
 <% end %>

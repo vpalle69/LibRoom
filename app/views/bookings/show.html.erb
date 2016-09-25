@@ -17,7 +17,7 @@
 
 <p>
   <strong>Endtime:</strong>
-  <%= @booking.endtime %>
+  <%= @booking.starttime+2.hours %>
 </p>
 
 <%= link_to 'Edit', edit_booking_path(@booking) %> |
