@@ -4,22 +4,28 @@
     background-color: #C0C0C0;
   }
 </style>
+<h1><%= @users.name %> | Reservations </h1>
+<% if current_user.email==@users.email or current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Room no</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+  </tr>
+  </thead>
+  <tbody>
 <% @bookings.each do |booking| %>
-<p>
-  <strong>Roomno:</strong>
-  <%= booking.roomno %>
-</p>
-
-<p>
-  <strong>start time:</strong>
-  <%= booking.starttime %>
-</p>
-    <p>
-      <strong>End time:</strong>
-      <%= booking.endtime %>
-    </p>
-
-<% end %>
-
+      <tr>
+        <td><%= booking.roomno %></td>
+        <td><%= booking.starttime %></td>
+        <td><%= booking.endtime %></td>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+<% else %>
+    <h3> Sorry you cannot view these details</h3>
+    <% end %>
 
 <%= link_to 'Back', users_path %>

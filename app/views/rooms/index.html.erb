@@ -38,6 +38,7 @@
         <td><%= link_to 'Show', room %></td>
         <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin'  %>
             <td><%= link_to 'Edit', edit_room_path(room) %></td>
+            <td><%= link_to 'View Booking History', {:controller => "rooms", :action => "view_reservation", :roomno => room.roomno}  %></td>
             <td><%= link_to 'Delete', room, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
         <% end %>
   <% end %>

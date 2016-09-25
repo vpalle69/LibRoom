@@ -29,6 +29,11 @@ class RoomsController < ApplicationController
       @rooms = Room.find_by_sql(sql_query)
     end
   end
+  def view_reservation
+    @bookings=Booking.where(roomno: params[:roomno])
+    #render plain @bookings.inspect
+    return @bookings
+  end
   # GET /rooms/new
   def new
     @room = Room.new

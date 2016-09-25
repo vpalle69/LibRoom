@@ -2,11 +2,13 @@ Rails.application.routes.draw do
   resources :bookings do
     collection do
       get :search
+
     end
   end
   resources :rooms do
     collection do
       get :search
+      get :view_reservation
     end
   end
 

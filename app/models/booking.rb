@@ -5,6 +5,6 @@ class Booking < ApplicationRecord
    # @course_mappings = @user.course_mappings.sort_by &:course_id
     #return @courses, @course_mappings, @user
   #end
-  validates :roomno, :booked_user, :starttime, :endtime,  presence: true
+  validates :roomno, :booked_user, :starttime,  presence: true
   has_many :users, through: :rooms
 end

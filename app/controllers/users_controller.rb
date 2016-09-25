@@ -53,8 +53,9 @@ class UsersController < ApplicationController
     end
   end
   def view_reservation
-    @bookings=Booking.find_by(booked_user: params[:user][:email])
-    @bookings
+    @users=User.find_by(email: params[:email])
+    @bookings=Booking.where(booked_user: params[:email])
+    return @bookings,@users
   end
   # GET /users/1/edit
   def edit

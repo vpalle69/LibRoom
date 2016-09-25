@@ -13,7 +13,7 @@
 
   <div class="field">
     <%= f.label :"Room No" %>
-    <%= f.number_field :roomno, :value=>@booking.roomno %>
+    <%= f.number_field :roomno, :value=>@bookings.roomno %>
   </div>
 <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
   <div class="field">
@@ -25,10 +25,9 @@
     <% end %>
   <div class="field">
     <%= f.label :starttime %>
-    <%= f.datetime_select :starttime %>
+    <%=  f.datetime_select(:starttime, :start_year => 2016, :ampm => true, :default => 0.days.from_now.in_time_zone(@timezone), :minute_step => 30) %>
   </div>
 
-    <%= f.hidden_field :endtime, :value => ((f.datetime_select :starttime).to_time + 2.hours).to_datetime  %>
 
   <div class="actions">
     <%= f.submit %>

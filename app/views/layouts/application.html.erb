@@ -62,6 +62,7 @@
           <ul >
             <li >  <%= link_to "Edit Profile", edit_user_path(current_user) %> </li>
             <li >  <%= link_to "Search Rooms", rooms_path %> </li>
+            <li><%= link_to 'View Booking History', {:controller => "users", :action => "view_reservation", :email => current_user.email}  %></li>
           </ul>
       <% elsif current_user.usertype == 'Admin' or  current_user.usertype == 'Super Admin' %>
           <h3>Welcome <%= current_user.name %> | <%= link_to "Logout", '/users/logout'%></h3>

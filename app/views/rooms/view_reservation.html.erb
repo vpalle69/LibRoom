@@ -1,0 +1,38 @@
+<p id="notice"><%= notice %></p>
+<style>
+  body{
+    background-color: #C0C0C0;
+  }
+</style>
+<table border="1">
+  <thead>
+  <tr>
+    <th>Booked User</th>
+    <th>Building</th>
+    <th>Size</th>
+    <th>Start Time</th>
+    <th>End Time</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% i=1 %>
+  <% @bookings.each do |booking| %>
+      <tr>
+       <% if i==1 %>
+            <h1><%= booking.roomno %> | Reservations </h1>
+            <% i=i+1 %>
+        <% end %>
+            <% @users=User.find_by(email:  booking.booked_user) %>
+        <% @rooms=Room.find_by(roomno:  booking.roomno) %>
+        <td><%= @users.name %></td>
+        <td><%= @rooms.building %></td>
+        <td><%= @rooms.size %></td>
+        <td><%= booking.starttime %></td>
+        <td><%= booking.endtime %></td>
+  <% end %>
+  </tr>
+  </tbody>
+</table>
+
+
+<%= link_to 'Back', rooms_path %>
