@@ -2,6 +2,7 @@ Rails.application.routes.draw do
   resources :bookings do
     collection do
       get :search
+      get :new_reservation
 
     end
   end

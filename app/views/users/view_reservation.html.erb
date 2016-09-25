@@ -10,6 +10,8 @@
   <thead>
   <tr>
     <th>Room no</th>
+    <th>Building</th>
+    <th>Size</th>
     <th>Start Time</th>
     <th>End Time</th>
   </tr>
@@ -18,6 +20,9 @@
 <% @bookings.each do |booking| %>
       <tr>
         <td><%= booking.roomno %></td>
+        <% @room=Room.find_by(roomno:  booking.roomno) %>
+        <td><%= @room.building %></td>
+        <td><%= @room.size %></td>
         <td><%= booking.starttime %></td>
         <td><%= booking.endtime %></td>
   <% end %>

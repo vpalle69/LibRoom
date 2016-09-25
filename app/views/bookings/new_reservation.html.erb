@@ -1,0 +1,39 @@
+<h2>New Reservation</h2>
+<%= form_for @booking do |f| %>
+    <% if @booking.errors.any? %>
+        <div id="error_explanation">
+          <h2><%= pluralize(booking.errors.count, "error") %> prohibited this booking from being saved:</h2>
+
+          <ul>
+            <% @booking.errors.full_messages.each do |message| %>
+                <li><%= message %></li>
+            <% end %>
+          </ul>
+        </div>
+    <% end %>
+
+    <div class="field">
+      <%= f.label :"Room No" %>
+      <%= f.number_field :roomno, :value=>@room.roomno %>
+    </div>
+    <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
+        <div class="field">
+          <%= f.label :booked_user %>
+          <%= f.text_field :booked_user %>
+        </div>
+    <% else %>
+        <%= f.hidden_field :booked_user, :value => current_user.email %>
+    <% end %>
+    <div class="field">
+      <%= f.label :starttime %><br>
+      <%= f.datetime_select :starttime, start_year: Date.today.year, end_year: Date.today.year+1,:minute_step => 30 %>
+    </div>
+    <div class="field">
+      <%= f.label :endtime %><br>
+      <%= f.datetime_select :endtime, start_year: Date.today.year, end_year: Date.today.year+1,:minute_step => 30 %>
+    </div>
+
+    <div class="actions">
+      <%= f.submit %>
+    </div>
+<% end %>

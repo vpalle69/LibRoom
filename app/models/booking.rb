@@ -6,6 +6,5 @@ class Booking < ApplicationRecord
     #return @courses, @course_mappings, @user
   #end
   validates :roomno, :booked_user, :starttime,  presence: true
-  has_many :users
-  has_many :rooms
+
 end

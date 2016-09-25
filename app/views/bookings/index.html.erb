@@ -61,7 +61,7 @@
             <td><%= room.size %></td>
             <td> No reservations </td>
             <td> No reservations </td>
-            <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new", :roomno => room.roomno} %></td>
+            <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => room.roomno} %></td>
       <% end %>
       </tr>
   <% else %>
@@ -75,11 +75,11 @@
                 <% end %>
             <% end %>
             <td><%= booking.starttime %></td>
-            <td><%= booking.starttime+2.hours %></td>
+            <td><%= booking.endtime %></td>
             <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' or current_user.email==booking.booked_user %>
                 <td> <%= button_to 'Release Room', booking, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
             <% end %>
-            <td> <%= link_to 'Create Reservation', new_booking_path,:roomno=>booking.roomno %></td>
+            <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => booking.roomno} %></td>
       <% end %>
   <% end %>
   </tr>
