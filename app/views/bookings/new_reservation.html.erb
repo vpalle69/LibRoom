@@ -14,7 +14,7 @@
 
     <div class="field">
       <%= f.label :"Room No" %>
-      <%= f.number_field :roomno, :value=>@room.roomno %>
+      <%= f.number_field :roomno, :value=>params[:roomno] %>
     </div>
     <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
         <div class="field">

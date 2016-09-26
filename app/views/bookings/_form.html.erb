@@ -25,11 +25,11 @@
     <% end %>
     <div class="field">
       <%= f.label :starttime %><br>
-      <%= f.datetime_select :starttime, start_year: Date.today.year, end_year: Date.today.year+1 %>
+      <%= f.datetime_select :starttime, start_year: Date.today.year, end_year: Date.today.year+1, :minute_step => 30  %>
     </div>
     <div class="field">
       <%= f.label :endtime %><br>
-      <%= f.datetime_select :endtime, start_year: Date.today.year, end_year: Date.today.year+1 %>
+      <%= f.datetime_select :endtime, start_year: Date.today.year, end_year: Date.today.year+1, :minute_step => 30 %>
     </div>
 
   <div class="actions">

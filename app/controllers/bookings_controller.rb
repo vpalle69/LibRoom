@@ -34,12 +34,14 @@ class BookingsController < ApplicationController
   end
 def new_reservation
   @booking = Booking.new
-  @room = Room.find_by(roomno: params[:roomno])
+  @room = Room.where("roomno LIKE ?", params[:roomno])
+
+ ## @room = Room.find_by(roomno: params[:roomno])
   #render plain: @room.inspect
-  if @room.nil?
-    flash[:notice] = "Room not found !"
-    render '/bookings/index'
-  end
+  #if @room.nil?
+  #  flash[:notice] = "Room not found !"
+   # render '/bookings/index'
+  #end
   return @booking,@room
 end
   # GET /bookings/new
@@ -62,7 +64,7 @@ end
   def create
 
     @booking = Booking.new(booking_params)
-    @room = Room.where("roomno = ?", @booking.roomno)
+    @room = Room.where("roomno LIKE ?", @booking.roomno)
     if @room.nil? or @room.empty?
       flash[:notice] = "Room not found !"
       render 'bookings/new' and return
@@ -84,7 +86,7 @@ end
       flash[:notice] = "You cannot book for a day i.e 7 days after today !"
       render 'bookings/new' and return
     end
-    @current_bookings = Booking.where("roomno = ? and ? <= endtime and starttime <= ? ", @booking.roomno,
+    @current_bookings = Booking.where("roomno LIKE ? and ? <= endtime and starttime <= ? ", @booking.roomno,
                                               @booking.starttime, @booking.endtime)
     if not @current_bookings.nil? and not @current_bookings.empty?
       puts @current_bookings.first.starttime
@@ -101,6 +103,9 @@ end
       flash[:notice] = "Booking can be made only for 2 hours at a time"
       render 'bookings/new' and return
     end
+    @booking.room_id = @room.first.id
+    @booking.user_id = @user.first.id
+    flash[:notice] = "#{@booking.user_id}"
     respond_to do |format|
 
       if @booking.save
