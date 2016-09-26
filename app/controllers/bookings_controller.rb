@@ -64,7 +64,7 @@ end
   def create
 
     @booking = Booking.new(booking_params)
-    @room = Room.where("roomno LIKE ?", @booking.roomno)
+    @room = Room.where("roomno = ?", @booking.roomno)
     if @room.nil? or @room.empty?
       flash[:notice] = "Room not found !"
       render 'bookings/new' and return
