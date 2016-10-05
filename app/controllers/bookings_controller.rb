@@ -92,7 +92,7 @@ end
       flash[:notice] = "You cannot book for a day i.e 7 days after today !"
       render 'bookings/new' and return
     end
-    @current_bookings = Booking.where("roomno LIKE ? and ? <= endtime and starttime <= ? ", @booking.roomno,
+    @current_bookings = Booking.where("roomno = ? and ? <= endtime and starttime <= ? ", @booking.roomno,
                                               @booking.starttime, @booking.endtime)
     if not @current_bookings.nil? and not @current_bookings.empty?
       puts @current_bookings.first.starttime
