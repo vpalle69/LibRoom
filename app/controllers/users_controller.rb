@@ -37,7 +37,9 @@ class UsersController < ApplicationController
   def search
     search_user = params[:user].reject {|key, value| value.empty? }
     if search_user.values.empty?
-      redirect_to '/user'
+      sql_query = "select * from users"
+      @users = User.find_by_sql(sql_query)
+      return @users
     else
       sql_query = "select * from users where "
       i = 1
