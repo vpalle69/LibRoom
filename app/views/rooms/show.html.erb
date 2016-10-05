@@ -19,7 +19,7 @@
   <strong>Status:</strong>
   <%= @room.status %>
 </p>
-<%= if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
+<% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' %>
 <%= link_to 'Edit', edit_room_path(@room) %>
     <% end %>
 <%= link_to 'Back', rooms_path %>
