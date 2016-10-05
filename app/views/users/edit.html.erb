@@ -22,29 +22,23 @@
           </ul>
         </div>
     <% end %>
-
+    <% if @user.id == current_user.id %>
     <div class="field">
       <%= f.label :name %><br>
       <%= f.text_field :name %>
     </div>
-    <% if @user.usertype != 'Super Admin' %>
         <div class="field">
           <%= f.label :email %><br>
           <%= f.text_field :email %>
         </div>
-        <% if @user.id == current_user.id %>
             <div class="field">
               <%= f.label :password %><br>
               <%= f.password_field :password %>
             </div>
-        <% end %>
-        <% if @user.usertype == 'Super Admin' or @user.usertype == 'Admin' %>
             <div class="field">
-              <%= f.label :"Type of User" %><br>
-              <%= f.select :usertype, ['Member', 'Admin'] %>
+              <%= f.hidden_field :usertype, :value => @user.usertype %>
             </div>
         <% end %>
-    <% end %>
     <div class="actions">
       <%= f.submit %>
     </div>

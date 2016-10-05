@@ -2,7 +2,7 @@
   <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin'  %>
 <li><%= link_to "Add Rooms", new_room_path %></li>
   <% end %>
-<li><%= link_to "view Bookings", bookings_path %></li>
+<li><%= link_to "Book a Room", bookings_path %></li>
 </ul>
 
 <%= form_for :room, url: search_rooms_path, method: :get do |f| %>

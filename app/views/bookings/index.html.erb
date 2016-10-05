@@ -53,19 +53,10 @@
   </tr>
   </thead>
   <tbody>
-  <% if @bookings.nil? %>
-      <% @rooms.each do |room| %>
-          <tr>
-            <td><%= room.roomno %></td>
-            <td><%= room.building %></td>
-            <td><%= room.size %></td>
-            <td> No reservations </td>
-            <td> No reservations </td>
-            <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => room.roomno} %></td>
-      <% end %>
-      </tr>
-  <% else %>
+
       <% @bookings.each do |booking| %>
+          <% if booking.starttime.future? or booking.endtime.future?%>
+
           <tr>
             <td><%= booking.roomno %></td>
             <% @rooms.each do |room| %>
@@ -80,11 +71,32 @@
                 <td> <%= button_to 'Release Room', booking, method: :delete, data: { confirm: 'Are you sure you want to delete it?' } %></td>
             <% end %>
             <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => booking.roomno} %></td>
-      <% end %>
+        <%end%>
+          <% end %>
+  </tr>
+  </tbody>
+</table>
+<h3> List of Rooms </h3>
+
+<table border="1">
+  <thead>
+  <tr>
+    <th>Room No</th>
+    <th>Building</th>
+    <th>Size</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @rooms.each do |room| %>
+      <tr>
+        <td><%= room.roomno %></td>
+        <td><%= room.building %></td>
+        <td><%= room.size %></td>
+        <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => room.roomno} %></td>
   <% end %>
   </tr>
   </tbody>
 </table>
-
 
 </body>

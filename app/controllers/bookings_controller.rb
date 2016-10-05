@@ -6,7 +6,11 @@ class BookingsController < ApplicationController
   def search
     search_room = params[:room].reject {|key, value| value.empty? }
     if search_room.values.empty?
-      redirect_to '/bookings'
+      sql_query = "select * from rooms"
+      @rooms = Room.find_by_sql(sql_query)
+      @bookings = Booking.all
+      return @rooms,@bookings
+      #redirect_to '/bookings'
     else
       sql_query = "select * from rooms where "
       i = 1
@@ -18,6 +22,7 @@ class BookingsController < ApplicationController
           i += 1
         end
       end
+      @bookings = Booking.all
       @rooms = Room.find_by_sql(sql_query)
     end
     return @rooms,@bookings
@@ -31,6 +36,7 @@ class BookingsController < ApplicationController
   # GET /bookings/1
   # GET /bookings/1.json
   def show
+
   end
 def new_reservation
   @booking = Booking.new

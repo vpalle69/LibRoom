@@ -1,3 +1,9 @@
+<ul>
+  <% if current_user.usertype == 'Super Admin' or current_user.usertype=='Admin'  %>
+      <li><%= link_to "Add Rooms", new_room_path %></li>
+  <% end %>
+  <li><%= link_to "Book a Room", bookings_path %></li>
+</ul>
 <html>
 <head>
   <title> List of Rooms </title>

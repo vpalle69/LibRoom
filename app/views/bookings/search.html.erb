@@ -21,7 +21,7 @@
 </head>
 <body>
 
-<h3> Availability of Rooms </h3>
+<h3> Search By </h3>
 
 <%= form_for :room, url: search_bookings_path, method: :get do |f| %>
     <div class="field">
@@ -39,7 +39,7 @@
 
     <%= f.submit :Search %>
 <% end %>
-<h3> List of Rooms </h3>
+<h3> List of Reservations </h3>
 
 <table border="1">
   <thead>
@@ -68,24 +68,44 @@
   <% else %>
   <% @bookings.each do |booking| %>
       <tr>
-        <td><%= booking.roomno %></td>
         <% @rooms.each do |room| %>
-            <% if room.roomno==booking.roomno %>
+            <% if room.roomno==booking.roomno and (booking.starttime.future? or booking.endtime.future? ) %>
+                <td><%= booking.roomno %></td>
                 <td><%= room.building %></td>
                 <td><%= room.size %></td>
-            <% end %>
-        <% end %>
-        <td><%= booking.starttime %></td>
-        <td><%= booking.endtime %></td>
+                <td><%= booking.starttime %></td>
+                <td><%= booking.endtime %></td>
         <% if current_user.usertype=='Super Admin' or current_user.usertype=='Admin' or current_user.email==booking.booked_user %>
         <td> <%= button_to 'Release Room', booking,method: :delete,  confirm: 'Are you sure you want to delete it?'  %></td>
         <% end %>
         <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => booking.roomno} %></td>
-  <% end %>
+            <% end %>
+        <% end %>
+            <% end %>
 <% end %>
   </tr>
   </tbody>
 </table>
+<h3> List of Rooms </h3>
 
-
+<table border="1">
+  <thead>
+  <tr>
+    <th>Room No</th>
+    <th>Building</th>
+    <th>Size</th>
+    <th colspan="3"></th>
+  </tr>
+  </thead>
+  <tbody>
+        <% @rooms.each do |room| %>
+      <tr>
+                <td><%= room.roomno %></td>
+                <td><%= room.building %></td>
+                <td><%= room.size %></td>
+                <td> <%= link_to 'Create Reservation', {:controller => "bookings", :action => "new_reservation", :roomno => room.roomno} %></td>
+            <% end %>
+  </tr>
+  </tbody>
+</table>
 </body>
