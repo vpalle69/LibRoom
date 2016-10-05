@@ -14,7 +14,9 @@ class RoomsController < ApplicationController
   def search
     search_room = params[:room].reject {|key, value| value.empty? }
     if search_room.values.empty?
-      redirect_to '/room'
+      sql_query = "select * from rooms"
+      @rooms = Room.find_by_sql(sql_query)
+      return @rooms
     else
       sql_query = "select * from rooms where "
       i = 1
