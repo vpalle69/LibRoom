@@ -112,6 +112,13 @@ end
     @booking.room_id = @room.first.id
     @booking.user_id = @user.first.id
     flash[:notice] = "#{@booking.user_id}"
+    @newroom = Room.find(@booking.room_id)
+    BookingMailer.booking_email(@booking.starttime,@booking.endtime,@booking.booked_user,@booking.roomno,@newroom.building).deliver_now!
+    emails=params[:emails]
+    values=emails.split(",")
+    values.each do |value|
+      BookingMailer.booking_email(@booking.starttime,@booking.endtime,value,@booking.roomno,@newroom.building).deliver_now!
+    end
     respond_to do |format|
 
       if @booking.save

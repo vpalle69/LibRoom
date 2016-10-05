@@ -31,7 +31,7 @@
       <%= f.label :endtime %><br>
       <%= f.datetime_select :endtime, start_year: Date.today.year, end_year: Date.today.year+1, :minute_step => 30 %>
     </div>
-
+    Invite: <%= text_field_tag "emails" %> (please give emails in comma seperated eg: abc@gmail.com,xyz@gmail.com) <br><br>
   <div class="actions">
     <%= f.submit %>
   </div>

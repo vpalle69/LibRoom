@@ -61,8 +61,8 @@ Rails.application.configure do
       :address        => 'smtp.gmail.com',
       :domain         => 'localhost',
       :port           => 587,
-      :user_name      => 'vamshidhar.palle@gmail.com',
-      :password       => 'ShravanI@2012',
+      :user_name      => 'ooddroombooking@gmail.com',
+      :password       => 'csc517f16',
       :authentication => :plain
   }
 end
